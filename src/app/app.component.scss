@@ -1,0 +1,25 @@
+.content {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.sort-area {
+  margin-bottom: 20px;
+  .drop-down {
+    margin-right: 15px;
+  }
+}
+
+.card-area {
+  .card {
+    max-width: 220px;
+  }
+}
+
+.drop-down {
+  margin: 15px 15px 0 0;
+}

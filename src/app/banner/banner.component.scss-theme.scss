@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+$app-banner-density-config: (
+  height: (
+    default: 120px,
+    maximum: 150px,
+    minimum: 90px,
+  )
+);
+
+@mixin app-banner-density($density-config) {
+  $height: map.get($app-banner-density-config, height, $density-config);
+  app-banner {
+    min-height: $height;
+  }
+}
+
+@mixin app-banner-typography($typography-config) {
+  app-banner {
+    .heading {
+      @include mat.typography-level($typography-config, title);
+    }
+    .message {
+      @include mat.typography-level($typography-config, body-1);
+    }
+  }
+}
+
+@mixin app-banner-theme($theme) {
+  $theme-colors: mat.get-color-config($theme);
+  $typography: mat.get-typography-config($theme);
+  $density: mat.get-density-config($theme);
+
+  $success-color-palette: map.get($theme-colors, success);
+  $info-color-palette: map.get($theme-colors, info);
+  $warn-color-palette: map.get($theme-colors, warn);
+  $backgrounds: map.get($theme-colors, background);
+  $foregrounds: map.get($theme-colors, foreground);
+
+  @if $density != null {
+    @include app-banner-density($density);
+  }
+
+  @if $typography != null {
+    @include app-banner-typography($typography);
+  }
+
+  app-banner {
+    @include mat.overridable-elevation(4, mat.get-color-from-palette($foregrounds, elevation));
+
+    background-color: mat.get-color-from-palette($backgrounds, card);
+    &.app-banner-success {
+      background-color: mat.get-color-from-palette($success-color-palette, lighter);
+    }
+    &.app-banner-info {
+      background-color: mat.get-color-from-palette($info-color-palette, lighter);
+    }
+    &.app-banner-warn {
+      background-color: mat.get-color-from-palette($warn-color-palette, lighter);
+    }
+  }
+}

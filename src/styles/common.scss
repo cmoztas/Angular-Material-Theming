@@ -1,0 +1,37 @@
+@use '@angular/material' as mat;
+@use '../app/banner/banner.component.scss-theme' as banner;
+@use '../app/app.component.scss-theme' as root;
+@use 'sass:map';
+
+$workshop-typography: mat.define-typography-config(
+  $font-family: "'Open Sans', sans-serif",
+  $display-4: mat.define-typography-level(95px, 95px, 300, $letter-spacing: -0.05em)
+);
+
+@function apply-extra-colors($theme, $extra-color-scheme) {
+  @return map.deep-merge(
+      $theme,
+      (
+        color: $extra-color-scheme
+      )
+  );
+}
+
+@mixin create-theme($workshop-theme) {
+  //@include material.angular-material-theme($workshop-theme);
+  @include mat.core-theme($workshop-theme);
+  @include mat.toolbar-theme($workshop-theme);
+  @include mat.form-field-theme($workshop-theme);
+  @include mat.select-theme($workshop-theme);
+  @include mat.button-theme($workshop-theme);
+  @include mat.card-theme($workshop-theme);
+  body {
+    @include mat.strong-focus-indicators-theme($workshop-theme);
+  }
+  .mat-toolbar.mat-primary {
+    @include mat.strong-focus-indicators-theme(white);
+  }
+
+  @include banner.app-banner-theme($workshop-theme);
+  @include root.app-root-theme($workshop-theme);
+}

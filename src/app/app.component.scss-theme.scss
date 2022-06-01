@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@mixin app-root-theme($theme) {
+  $theme-colors: mat.get-color-config($theme);
+  $backgrounds: map-get($theme-colors, background);
+  $density-scale: mat.get-density-config($theme);
+
+  app-root {
+    .content {
+      background-color: mat.get-color-from-palette($backgrounds, background);
+      min-height: calc(100vh - #{get-content-offset($density-scale)});
+    }
+  }
+}
+
+@function get-content-offset($density: default) {
+  $offset: 64px;
+  @if $density == minimum {
+    $offset: 44px;
+  }
+  @return $offset;
+}
